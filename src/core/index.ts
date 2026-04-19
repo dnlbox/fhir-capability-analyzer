@@ -17,3 +17,4 @@ export type {
 
 export { parseCapabilityStatement } from "./parse.js";
 export { fetchCapabilityStatement, parseFromJson } from "./fetch.js";
+export { analyze } from "./analyze.js";
