@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-04-19
+
+### Added
+
+- OAuth 2.0 bearer token support for secured FHIR servers: `--bearer-token <token>` flag on `analyze` and `compare` commands; falls back to `FHIR_TOKEN` environment variable
+- `FetchOptions` type exported from the library for consumer use
+- `fetchCapabilityStatement(url, options?)` now accepts an optional `headers` map
+
+### Fixed
+
+- Removed deprecated `tsconfig.json` options (`baseUrl`, `esModuleInterop: false`) that would stop functioning in TypeScript 7.0
+
 ## [0.1.1] - 2026-04-19
 
 ### Added
@@ -26,5 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VitePress documentation site at [dnlbox.github.io/fhir-capability-analyzer](https://dnlbox.github.io/fhir-capability-analyzer/)
 - GitHub Actions: CI (Node 20 + lts/*), docs deploy, npm + GitHub Packages publish on release
 
+[0.1.2]: https://github.com/dnlbox/fhir-capability-analyzer/releases/tag/v0.1.2
 [0.1.1]: https://github.com/dnlbox/fhir-capability-analyzer/releases/tag/v0.1.1
 [0.1.0]: https://github.com/dnlbox/fhir-capability-analyzer/releases/tag/v0.1.0

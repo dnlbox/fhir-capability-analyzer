@@ -11,6 +11,7 @@ type OutputFormat = "text" | "json" | "markdown";
 
 interface AnalyzeOptions {
   format: OutputFormat;
+  bearerToken?: string;
 }
 
 function isUrl(input: string): boolean {
@@ -27,7 +28,9 @@ export async function runAnalyze(source: string, options: AnalyzeOptions): Promi
 
   if (isUrl(source)) {
     process.stderr.write(pc.dim(`Fetching ${source}...\n`));
-    fetchResult = await fetchCapabilityStatement(source);
+    const token = options.bearerToken ?? process.env["FHIR_TOKEN"];
+    const fetchOptions = token ? { headers: { Authorization: `Bearer ${token}` } } : undefined;
+    fetchResult = await fetchCapabilityStatement(source, fetchOptions);
   } else {
     let raw: unknown;
     try {
