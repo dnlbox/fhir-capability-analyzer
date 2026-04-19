@@ -1,0 +1,103 @@
+{
+  "name": "fhir-capability-analyzer",
+  "version": "0.1.0",
+  "description": "CLI and library for fetching, analyzing, and comparing FHIR server CapabilityStatements",
+  "author": "Daniel Veronez",
+  "license": "MIT",
+  "homepage": "https://dnlbox.github.io/fhir-capability-analyzer/",
+  "keywords": [
+    "fhir",
+    "hl7",
+    "healthcare",
+    "capability-statement",
+    "fhir-capability",
+    "health-interoperability",
+    "fhir-analyzer",
+    "fhir-compare",
+    "r4",
+    "r4b",
+    "r5",
+    "us-core",
+    "uk-core",
+    "ips",
+    "cli",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dnlbox/fhir-capability-analyzer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dnlbox/fhir-capability-analyzer/issues"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "bin": {
+    "fhir-capability-analyzer": "./dist/cli/index.js"
+  },
+  "main": "./dist/core/index.js",
+  "types": "./dist/core/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/core/index.js",
+      "types": "./dist/core/index.d.ts"
+    },
+    "./registry": {
+      "import": "./dist/registry/index.js",
+      "types": "./dist/registry/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "cli": "tsx src/cli/index.ts",
+    "cli:watch": "tsx --watch src/cli/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests --no-error-on-unmatched-pattern",
+    "lint:fix": "eslint src tests --fix --no-error-on-unmatched-pattern",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "prepare": "lefthook install",
+    "prepublishOnly": "pnpm build && pnpm typecheck && pnpm test",
+    "docs:dev": "vitepress dev docs/site",
+    "docs:build": "vitepress build docs/site",
+    "docs:preview": "vitepress preview docs/site"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/coverage-v8": "^2.1.8",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "lefthook": "^2.1.4",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.0.0",
+    "vitepress": "^1.6.4",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "lefthook"
+    ]
+  }
+}
