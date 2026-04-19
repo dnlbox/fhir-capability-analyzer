@@ -3,32 +3,51 @@ node_modules/
 
 # Build output
 dist/
+docs/site/.vitepress/dist/
+docs/site/.vitepress/cache/
+
+# TypeScript
 *.tsbuildinfo
 
 # Coverage
 coverage/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# OS
-.DS_Store
-Thumbs.db
 
 # Environment
 .env
 .env.local
 .env.*.local
 
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Claude Code
+.claude/
+
+# Internal maintainer notes (not published)
+AGENTS.md
+CLAUDE.md
+docs/AGENTS.md
+docs/PROJECT.md
+docs/specs/
+docs/research/
+src/core/AGENTS.md
+src/registry/AGENTS.md
+src/formatters/AGENTS.md
+src/cli/AGENTS.md
+tests/AGENTS.md
+examples/AGENTS.md
+
+# Local archive (historical specs, research)
+.archive/
+
+# pnpm
+.pnpm-debug.log
+
 # Logs
 *.log
 npm-debug.log*
 pnpm-debug.log*
-
-# Package manager locks (pnpm only)
-package-lock.json
-yarn.lock
