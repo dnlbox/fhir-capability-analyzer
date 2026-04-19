@@ -163,6 +163,9 @@ Detects conformance to known international and national FHIR profiles by matchin
 | IPA              | 🌍 international | `http://hl7.org/fhir/uv/ipa/`                                                      |
 | SMART App Launch | 🌍 international | `http://fhir-registry.smarthealthit.org/`, `http://hl7.org/fhir/smart-app-launch/` |
 | ISiK             | 🇩🇪 de            | `https://gematik.de/fhir/isik/`, `https://gematik.de/fhir/ISiK/`                   |
+| FR Core          | 🇫🇷 fr            | `http://hl7.org/fhir/fr/core/`, `https://hl7.fr/ig/fhir/`                          |
+| NL Nictiz        | 🇳🇱 nl            | `http://nictiz.nl/fhir/`                                                            |
+| IHE              | 🌍 international | `https://profiles.ihe.net/`                                                         |
 
 ## Architecture
 
@@ -210,9 +213,8 @@ R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from the `fhirVersion` fie
 
 ## Roadmap
 
-- [ ] CA Baseline, FR Core, NL Nictiz, IHE profile detection
+- [x] CA Baseline, FR Core, NL Nictiz, IHE profile detection
 - [ ] Authentication support for secured FHIR servers (OAuth 2.0 token injection)
-- [ ] Browser-based UI using the same core library
 - [ ] `--assert` flag for CI: fail if a specific profile is not detected
 
 ## Links
