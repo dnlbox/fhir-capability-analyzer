@@ -52,6 +52,13 @@ The CLI adapter is the only place that may use Node-specific APIs.
 - Prefer **core correctness** over UI polish.
 - Every exported function should have at least one corresponding test.
 
+## Maintainer operating mode
+
+- Follow root workspace governance in `../AGENTS.md` for role, skills, and communication expectations.
+- Operate with an open-source maintainer mindset: protect API behavior, keep scope focused, and preserve long-term maintainability.
+- Prefer `git` + `gh` CLI for GitHub interactions (`git` for repo operations, `gh` for issues/PRs/releases/auth).
+- Log maintainer sessions to `../SESSION_LOG.md` with actor `dnlbox`.
+
 ## Commit and PR discipline
 
 - Small, focused commits — one logical change per commit.
