@@ -1,4 +1,4 @@
-import type { FetchResult } from "./types.js";
+import type { FetchOptions, FetchResult } from "./types.js";
 import { parseCapabilityStatement } from "./parse.js";
 
 const METADATA_PATH = "/metadata";
@@ -15,13 +15,15 @@ function normalizeUrl(input: string): string {
  * Appends /metadata if not already present.
  * Browser-safe — uses the standard fetch() API.
  */
-export async function fetchCapabilityStatement(url: string): Promise<FetchResult> {
+export async function fetchCapabilityStatement(
+  url: string,
+  options?: FetchOptions,
+): Promise<FetchResult> {
   const endpoint = normalizeUrl(url);
+  const headers: Record<string, string> = { Accept: FHIR_JSON_MIME, ...options?.headers };
   let response: Response;
   try {
-    response = await fetch(endpoint, {
-      headers: { Accept: FHIR_JSON_MIME },
-    });
+    response = await fetch(endpoint, { headers });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     return { success: false, error: `Network error fetching ${endpoint}: ${message}` };

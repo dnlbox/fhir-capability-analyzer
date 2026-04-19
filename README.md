@@ -93,6 +93,7 @@ Arguments:
 
 Options:
   -f, --format        Output format: text | json | markdown  (default: text)
+  --bearer-token      Bearer token for OAuth 2.0 protected servers
   -v, --version       Print version
   -h, --help          Show help
 
@@ -114,8 +115,26 @@ Arguments:
 Options:
   -f, --format        Output format: text | json | markdown  (default: text)
   --exit-on-diff      Exit with code 1 when differences are found
+  --bearer-token      Bearer token for OAuth 2.0 protected servers
   -h, --help          Show help
 ```
+
+### Authentication
+
+For OAuth 2.0 protected servers, pass the token via flag or environment variable:
+
+```bash
+# Via flag
+fhir-capability-analyzer analyze https://secure.example.com --bearer-token "$TOKEN"
+
+# Via environment variable (preferred for CI — keeps the token out of shell history)
+FHIR_TOKEN=eyJ... fhir-capability-analyzer analyze https://secure.example.com
+
+# Compare two secured servers (same token used for both)
+FHIR_TOKEN=eyJ... fhir-capability-analyzer compare https://server-a.example.com https://server-b.example.com
+```
+
+The `--bearer-token` flag takes precedence over `FHIR_TOKEN`. Tokens are never written to stdout or included in any output format.
 
 ## TypeScript library API
 
@@ -131,6 +150,11 @@ import { detectProfiles } from "fhir-capability-analyzer/registry";
 
 // Fetch from a live server
 const result = await fetchCapabilityStatement("https://hapi.fhir.org/baseR4");
+
+// Fetch from an OAuth 2.0 protected server
+const result = await fetchCapabilityStatement("https://secure.example.com", {
+  headers: { Authorization: `Bearer ${token}` },
+});
 if (!result.success) throw new Error(result.error);
 
 // Analyze
@@ -218,7 +242,7 @@ R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from the `fhirVersion` fie
 
 ## Roadmap
 
-- [ ] Authentication support for secured FHIR servers (OAuth 2.0 token injection)
+- [x] Authentication support for secured FHIR servers (OAuth 2.0 token injection)
 - [ ] `--assert` flag for CI: fail if a specific profile is not detected
 
 ## Links

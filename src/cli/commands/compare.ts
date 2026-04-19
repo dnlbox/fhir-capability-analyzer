@@ -13,6 +13,7 @@ type OutputFormat = "text" | "json" | "markdown";
 interface CompareOptions {
   format: OutputFormat;
   exitOnDiff: boolean;
+  bearerToken?: string;
 }
 
 function isUrl(input: string): boolean {
@@ -24,10 +25,12 @@ function loadFromFile(filePath: string): unknown {
   return JSON.parse(content) as unknown;
 }
 
-async function resolve(source: string): Promise<FetchResult> {
+async function resolve(source: string, bearerToken?: string): Promise<FetchResult> {
   if (isUrl(source)) {
     process.stderr.write(pc.dim(`Fetching ${source}...\n`));
-    return fetchCapabilityStatement(source);
+    const token = bearerToken ?? process.env["FHIR_TOKEN"];
+    const fetchOptions = token ? { headers: { Authorization: `Bearer ${token}` } } : undefined;
+    return fetchCapabilityStatement(source, fetchOptions);
   }
   let raw: unknown;
   try {
@@ -44,7 +47,10 @@ export async function runCompare(
   sourceB: string,
   options: CompareOptions,
 ): Promise<void> {
-  const [resultA, resultB] = await Promise.all([resolve(sourceA), resolve(sourceB)]);
+  const [resultA, resultB] = await Promise.all([
+    resolve(sourceA, options.bearerToken),
+    resolve(sourceB, options.bearerToken),
+  ]);
 
   if (!resultA.success) {
     process.stderr.write(pc.red(`Error loading A: ${resultA.error}\n`));

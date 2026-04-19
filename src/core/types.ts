@@ -126,6 +126,11 @@ export type FetchResult =
   | { success: true; capability: ServerCapability; raw: unknown }
   | { success: false; error: string };
 
+export interface FetchOptions {
+  /** Extra HTTP headers merged with the default Accept header. */
+  headers?: Record<string, string>;
+}
+
 /** Detected profile conformance for a specific URL. */
 export interface ProfileConformance {
   url: string;

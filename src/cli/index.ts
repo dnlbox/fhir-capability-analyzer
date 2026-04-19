@@ -20,9 +20,10 @@ program
   .command("analyze <source>")
   .description("Analyze a FHIR server's capabilities from a URL or local JSON file")
   .option("-f, --format <format>", "Output format: text | json | markdown", "text")
-  .action(async (source: string, options: { format: string }) => {
+  .option("--bearer-token <token>", "Bearer token for OAuth 2.0 protected servers (overrides FHIR_TOKEN env var)")
+  .action(async (source: string, options: { format: string; bearerToken?: string }) => {
     const format = options.format as "text" | "json" | "markdown";
-    await runAnalyze(source, { format });
+    await runAnalyze(source, { format, ...(options.bearerToken ? { bearerToken: options.bearerToken } : {}) });
   });
 
 program
@@ -30,14 +31,15 @@ program
   .description("Compare two FHIR servers' capabilities (URLs or local JSON files)")
   .option("-f, --format <format>", "Output format: text | json | markdown", "text")
   .option("--exit-on-diff", "Exit with code 1 when differences are found", false)
+  .option("--bearer-token <token>", "Bearer token for OAuth 2.0 protected servers (overrides FHIR_TOKEN env var)")
   .action(
     async (
       sourceA: string,
       sourceB: string,
-      options: { format: string; exitOnDiff: boolean },
+      options: { format: string; exitOnDiff: boolean; bearerToken?: string },
     ) => {
       const format = options.format as "text" | "json" | "markdown";
-      await runCompare(sourceA, sourceB, { format, exitOnDiff: options.exitOnDiff });
+      await runCompare(sourceA, sourceB, { format, exitOnDiff: options.exitOnDiff, ...(options.bearerToken ? { bearerToken: options.bearerToken } : {}) });
     },
   );
 

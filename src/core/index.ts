@@ -12,6 +12,7 @@ export type {
   ComparisonCategory,
   ComparisonDifference,
   FetchResult,
+  FetchOptions,
   ProfileConformance,
 } from "./types.js";
 
