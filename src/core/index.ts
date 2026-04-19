@@ -14,3 +14,6 @@ export type {
   FetchResult,
   ProfileConformance,
 } from "./types.js";
+
+export { parseCapabilityStatement } from "./parse.js";
+export { fetchCapabilityStatement, parseFromJson } from "./fetch.js";
