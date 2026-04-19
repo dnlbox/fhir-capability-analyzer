@@ -1,9 +1,48 @@
 import { defineConfig } from "vitepress";
 
+const HOSTNAME = "https://dnlbox.github.io/fhir-capability-analyzer";
+const DESCRIPTION =
+  "FHIR CapabilityStatement analyzer and comparator. Detect US Core, IPS, AU Core, and UK Core profiles. TypeScript CLI and library. CI-ready.";
+
 export default defineConfig({
   title: "fhir-capability-analyzer",
-  description: "Fetch, analyze, and compare FHIR server CapabilityStatements. Profile detection. CI-ready.",
+  description: DESCRIPTION,
   base: "/fhir-capability-analyzer/",
+  sitemap: { hostname: HOSTNAME + "/" },
+  head: [
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:site_name", content: "fhir-capability-analyzer" }],
+    ["meta", { property: "og:title", content: "fhir-capability-analyzer — FHIR CapabilityStatement analyzer CLI" }],
+    ["meta", { property: "og:description", content: DESCRIPTION }],
+    ["meta", { property: "og:url", content: HOSTNAME + "/" }],
+    ["meta", { name: "twitter:card", content: "summary" }],
+    ["meta", { name: "twitter:title", content: "fhir-capability-analyzer — FHIR CapabilityStatement analyzer CLI" }],
+    ["meta", { name: "twitter:description", content: DESCRIPTION }],
+    [
+      "script",
+      { type: "application/ld+json" },
+      JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "fhir-capability-analyzer",
+        description: DESCRIPTION,
+        applicationCategory: "DeveloperApplication",
+        operatingSystem: "Any",
+        programmingLanguage: "TypeScript",
+        url: HOSTNAME + "/",
+        downloadUrl: "https://www.npmjs.com/package/fhir-capability-analyzer",
+        license: "https://opensource.org/licenses/MIT",
+        codeRepository: "https://github.com/dnlbox/fhir-capability-analyzer",
+        author: { "@type": "Person", name: "Daniel Veronez" },
+      }),
+    ],
+  ],
+  transformHead({ pageData }) {
+    const slug = pageData.relativePath
+      .replace(/index\.md$/, "")
+      .replace(/\.md$/, ".html");
+    return [["link", { rel: "canonical", href: `${HOSTNAME}/${slug}` }]];
+  },
   themeConfig: {
     nav: [
       { text: "Guide", link: "/guide/getting-started", activeMatch: "/guide/" },
