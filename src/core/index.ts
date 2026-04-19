@@ -1,1 +1,16 @@
-export {};
+export type {
+  ServerCapability,
+  ResourceCapability,
+  SearchParamCapability,
+  OperationCapability,
+  SecurityCapability,
+  MessagingCapability,
+  DocumentCapability,
+  AnalysisReport,
+  AnalysisSummary,
+  ComparisonReport,
+  ComparisonCategory,
+  ComparisonDifference,
+  FetchResult,
+  ProfileConformance,
+} from "./types.js";
