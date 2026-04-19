@@ -2,6 +2,11 @@
 
 > A TypeScript CLI and library for fetching, analyzing, and comparing FHIR server CapabilityStatements.
 
+[![CI](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/codeql.yml/badge.svg)](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/codeql.yml)
+[![npm](https://img.shields.io/npm/v/fhir-capability-analyzer)](https://www.npmjs.com/package/fhir-capability-analyzer)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 CapabilityStatements are the machine-readable metadata every FHIR server exposes at its `/metadata` endpoint — describing every resource, interaction, search parameter, operation, and security mechanism the server supports. These documents are routinely 1,000–3,000 lines of deeply nested JSON.
 
 `fhir-capability-analyzer` answers the question: **"What does this FHIR server actually support?"**
@@ -213,7 +218,6 @@ R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from the `fhirVersion` fie
 
 ## Roadmap
 
-- [x] CA Baseline, FR Core, NL Nictiz, IHE profile detection
 - [ ] Authentication support for secured FHIR servers (OAuth 2.0 token injection)
 - [ ] `--assert` flag for CI: fail if a specific profile is not detected
 
