@@ -1,16 +1,21 @@
 #!/usr/bin/env node
+// Injected at build time by tsup (and in tests by vitest.config.ts define).
+// See tsup.config.ts for the define configuration.
+declare const __PACKAGE_VERSION__: string;
+
 import { Command } from "commander";
 import { runAnalyze } from "./commands/analyze.js";
 import { runCompare } from "./commands/compare.js";
 
-declare const __PACKAGE_VERSION__: string;
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+const cliVersion = typeof __PACKAGE_VERSION__ === "string" ? __PACKAGE_VERSION__ : "dev";
 
 const program = new Command();
 
 program
   .name("fhir-capability-analyzer")
   .description("Fetch, analyze, and compare FHIR server CapabilityStatements")
-  .version(__PACKAGE_VERSION__, "-v, --version");
+  .version(cliVersion, "-v, --version");
 
 program
   .command("analyze <source>")
