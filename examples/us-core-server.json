@@ -1,0 +1,67 @@
+{
+  "resourceType": "CapabilityStatement",
+  "id": "us-core-server-example",
+  "name": "USCoreServerExample",
+  "title": "Example US Core FHIR Server",
+  "status": "active",
+  "kind": "instance",
+  "fhirVersion": "4.0.1",
+  "format": ["json"],
+  "instantiates": [
+    "http://hl7.org/fhir/us/core/CapabilityStatement/us-core-server"
+  ],
+  "implementationGuide": [
+    "http://hl7.org/fhir/us/core/ImplementationGuide/hl7.fhir.us.core"
+  ],
+  "rest": [
+    {
+      "mode": "server",
+      "security": {
+        "cors": true,
+        "service": [
+          {
+            "coding": [{ "code": "SMART-on-FHIR" }]
+          }
+        ]
+      },
+      "resource": [
+        {
+          "type": "Patient",
+          "profile": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+          "supportedProfile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+          ],
+          "interaction": [
+            { "code": "read" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            { "name": "_id", "type": "token" },
+            { "name": "family", "type": "string" },
+            { "name": "birthdate", "type": "date" },
+            { "name": "gender", "type": "token" },
+            { "name": "identifier", "type": "token" }
+          ]
+        },
+        {
+          "type": "Observation",
+          "profile": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab",
+          "supportedProfile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-observation-lab",
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-vital-signs"
+          ],
+          "interaction": [
+            { "code": "read" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            { "name": "patient", "type": "reference" },
+            { "name": "category", "type": "token" },
+            { "name": "code", "type": "token" },
+            { "name": "date", "type": "date" }
+          ]
+        }
+      ]
+    }
+  ]
+}

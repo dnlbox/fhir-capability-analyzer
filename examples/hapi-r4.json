@@ -1,0 +1,94 @@
+{
+  "resourceType": "CapabilityStatement",
+  "id": "hapi-r4-example",
+  "name": "HAPIFHIRTestServer",
+  "title": "HAPI FHIR R4 Test Server",
+  "status": "active",
+  "kind": "instance",
+  "fhirVersion": "4.0.1",
+  "format": ["application/fhir+json", "application/fhir+xml", "json", "xml"],
+  "implementation": {
+    "description": "HAPI FHIR Test Server",
+    "url": "https://hapi.fhir.org/baseR4"
+  },
+  "rest": [
+    {
+      "mode": "server",
+      "security": {
+        "cors": true
+      },
+      "resource": [
+        {
+          "type": "Patient",
+          "profile": "http://hl7.org/fhir/StructureDefinition/Patient",
+          "interaction": [
+            { "code": "read" },
+            { "code": "vread" },
+            { "code": "update" },
+            { "code": "patch" },
+            { "code": "delete" },
+            { "code": "history-instance" },
+            { "code": "history-type" },
+            { "code": "create" },
+            { "code": "search-type" }
+          ],
+          "versioning": "versioned-update",
+          "conditionalCreate": true,
+          "conditionalUpdate": true,
+          "conditionalDelete": "multiple",
+          "searchParam": [
+            { "name": "_id", "type": "token" },
+            { "name": "family", "type": "string" },
+            { "name": "given", "type": "string" },
+            { "name": "birthdate", "type": "date" },
+            { "name": "gender", "type": "token" },
+            { "name": "identifier", "type": "token" },
+            { "name": "name", "type": "string" }
+          ]
+        },
+        {
+          "type": "Observation",
+          "profile": "http://hl7.org/fhir/StructureDefinition/Observation",
+          "interaction": [
+            { "code": "read" },
+            { "code": "create" },
+            { "code": "update" },
+            { "code": "delete" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            { "name": "patient", "type": "reference" },
+            { "name": "code", "type": "token" },
+            { "name": "date", "type": "date" },
+            { "name": "category", "type": "token" }
+          ]
+        },
+        {
+          "type": "Condition",
+          "profile": "http://hl7.org/fhir/StructureDefinition/Condition",
+          "interaction": [
+            { "code": "read" },
+            { "code": "create" },
+            { "code": "update" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            { "name": "patient", "type": "reference" },
+            { "name": "code", "type": "token" },
+            { "name": "clinical-status", "type": "token" }
+          ]
+        }
+      ],
+      "operation": [
+        {
+          "name": "$everything",
+          "definition": "http://hl7.org/fhir/OperationDefinition/Patient-everything"
+        },
+        {
+          "name": "$validate",
+          "definition": "http://hl7.org/fhir/OperationDefinition/Resource-validate"
+        }
+      ]
+    }
+  ]
+}
