@@ -39,7 +39,7 @@ npx fhir-capability-analyzer compare ./baseline.json https://server.example.com 
 
 ## Sample output
 
-```
+```txt
 Server: HAPI FHIR R4 Test Server
 FHIR Version: 4.0.1
 Status: active
@@ -82,7 +82,7 @@ npm install fhir-capability-analyzer
 
 Analyze a CapabilityStatement from a URL or local JSON file.
 
-```
+```bash
 Arguments:
   source              FHIR server URL or path to local JSON file
 
@@ -101,7 +101,7 @@ Exit codes:
 
 Compare two FHIR servers' capabilities.
 
-```
+```bash
 Arguments:
   sourceA             FHIR server URL or local JSON file (baseline)
   sourceB             FHIR server URL or local JSON file (target)
@@ -130,9 +130,9 @@ if (!result.success) throw new Error(result.error);
 
 // Analyze
 const report = analyze(result.capability);
-console.log(report.summary.resourceCount);      // number of resources
+console.log(report.summary.resourceCount); // number of resources
 console.log(report.conformance.detectedProfiles); // ProfileConformance[]
-console.log(report.warnings);                   // string[]
+console.log(report.warnings); // string[]
 
 // Parse from local JSON (e.g., after fs.readFileSync)
 const localResult = parseFromJson(JSON.parse(rawJson));
@@ -142,7 +142,9 @@ const diff = compare(capA, capB);
 // diff.added, diff.removed, diff.changed — ComparisonDifference[]
 
 // Profile detection only
-const profiles = detectProfiles(["http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"]);
+const profiles = detectProfiles([
+  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+]);
 // [{ url, name, country, standard }]
 ```
 
@@ -150,21 +152,21 @@ const profiles = detectProfiles(["http://hl7.org/fhir/us/core/StructureDefinitio
 
 Detects conformance to known international and national FHIR profiles by matching profile URLs declared in `instantiates`, `implementationGuide`, and per-resource `profile`/`supportedProfile` fields.
 
-| Standard | Country | URL prefix |
-|----------|---------|------------|
-| US Core | 🇺🇸 us | `http://hl7.org/fhir/us/core/` |
-| UK Core | 🇬🇧 uk | `https://fhir.hl7.org.uk/`, `https://fhir.nhs.uk/` |
-| AU Core | 🇦🇺 au | `http://hl7.org/fhir/au/core/` |
-| AU Base | 🇦🇺 au | `http://hl7.org.au/fhir/` |
-| CA Baseline | 🇨🇦 ca | `http://hl7.org/fhir/ca/baseline/` |
-| IPS | 🌍 international | `http://hl7.org/fhir/uv/ips/` |
-| IPA | 🌍 international | `http://hl7.org/fhir/uv/ipa/` |
+| Standard         | Country          | URL prefix                                                                         |
+| ---------------- | ---------------- | ---------------------------------------------------------------------------------- |
+| US Core          | 🇺🇸 us            | `http://hl7.org/fhir/us/core/`                                                     |
+| UK Core          | 🇬🇧 uk            | `https://fhir.hl7.org.uk/`, `https://fhir.nhs.uk/`                                 |
+| AU Core          | 🇦🇺 au            | `http://hl7.org/fhir/au/core/`                                                     |
+| AU Base          | 🇦🇺 au            | `http://hl7.org.au/fhir/`                                                          |
+| CA Baseline      | 🇨🇦 ca            | `http://hl7.org/fhir/ca/baseline/`                                                 |
+| IPS              | 🌍 international | `http://hl7.org/fhir/uv/ips/`                                                      |
+| IPA              | 🌍 international | `http://hl7.org/fhir/uv/ipa/`                                                      |
 | SMART App Launch | 🌍 international | `http://fhir-registry.smarthealthit.org/`, `http://hl7.org/fhir/smart-app-launch/` |
-| ISiK | 🇩🇪 de | `https://gematik.de/fhir/isik/`, `https://gematik.de/fhir/ISiK/` |
+| ISiK             | 🇩🇪 de            | `https://gematik.de/fhir/isik/`, `https://gematik.de/fhir/ISiK/`                   |
 
 ## Architecture
 
-```
+```md
 src/core/        browser-safe functional core
   types.ts       all shared TypeScript interfaces
   parse.ts       CapabilityStatement → ServerCapability
@@ -193,7 +195,7 @@ No code under `src/core/`, `src/registry/`, or `src/formatters/` imports Node.js
 - Profile evaluation beyond URL pattern matching
 - Authentication against secured FHIR servers
 - IG package resolution or download
-- XML ↔ JSON conversion — use the [`fhir`](https://www.npmjs.com/package/fhir) package
+- XML ↔ JSON conversion — use the [`fhir`](https://www.npmjs.com/package/fhir-tool) package
 
 ## Supported FHIR versions
 
@@ -201,10 +203,10 @@ R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from the `fhirVersion` fie
 
 ## Related tools
 
-| Tool | Purpose |
-|------|---------|
-| [fhir-resource-diff](https://github.com/dnlbox/fhir-resource-diff) | Validate, diff, and compare individual FHIR JSON resources |
-| [fhir-test-data](https://github.com/dnlbox/fhir-test-data) | Generate valid FHIR test data with country-aware identifiers |
+| Tool                                                               | Purpose                                                      |
+| ------------------------------------------------------------------ | ------------------------------------------------------------ |
+| [fhir-resource-diff](https://github.com/dnlbox/fhir-resource-diff) | Validate, diff, and compare individual FHIR JSON resources   |
+| [fhir-test-data](https://github.com/dnlbox/fhir-test-data)         | Generate valid FHIR test data with country-aware identifiers |
 
 ## Roadmap
 
