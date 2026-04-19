@@ -7,7 +7,6 @@ import { Command } from "commander";
 import { runAnalyze } from "./commands/analyze.js";
 import { runCompare } from "./commands/compare.js";
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 const cliVersion = typeof __PACKAGE_VERSION__ === "string" ? __PACKAGE_VERSION__ : "dev";
 
 const program = new Command();
