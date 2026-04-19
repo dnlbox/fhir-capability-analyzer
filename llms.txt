@@ -1,0 +1,59 @@
+# fhir-capability-analyzer
+
+> TypeScript CLI and library for fetching, analyzing, and comparing FHIR server CapabilityStatements.
+
+`fhir-capability-analyzer` answers the question: "What does this FHIR server actually support?"
+It fetches the CapabilityStatement from any FHIR server's /metadata endpoint, parses the deeply
+nested JSON into an ergonomic data model, detects conformance to international profiles, generates
+warnings for common configuration issues, and compares two servers' capabilities side by side.
+
+## Core library (browser-safe)
+
+```typescript
+import { fetchCapabilityStatement, parseFromJson, analyze, compare } from "fhir-capability-analyzer";
+import { detectProfiles } from "fhir-capability-analyzer/registry";
+```
+
+Key functions:
+- `fetchCapabilityStatement(url)` — fetch + parse a CapabilityStatement from a FHIR server URL
+- `parseFromJson(raw)` — parse a CapabilityStatement from an already-loaded JSON object
+- `analyze(capability)` — produce an AnalysisReport (summary, profile conformance, warnings)
+- `compare(a, b)` — produce a ComparisonReport (added, removed, changed differences)
+- `detectProfiles(urls)` — detect known profile families from a list of profile URLs
+
+## CLI
+
+```bash
+fhir-capability-analyzer analyze <url-or-file> [--format text|json|markdown]
+fhir-capability-analyzer compare <sourceA> <sourceB> [--format text|json|markdown] [--exit-on-diff]
+```
+
+## Key types
+
+- `ServerCapability` — ergonomic parsed CapabilityStatement
+- `AnalysisReport` — { server, summary, conformance, warnings }
+- `ComparisonReport` — { added, removed, changed } (ComparisonDifference[])
+- `FetchResult` — discriminated union: { success: true, capability } | { success: false, error }
+- `ProfileConformance` — { url, name, country, standard, version? }
+
+## Profile detection
+
+Detects: US Core, UK Core, AU Core/Base, CA Baseline, IPS, IPA, SMART App Launch, ISiK (Germany).
+Detection is prefix-based on profile URLs declared in the CapabilityStatement.
+
+## Output formats
+
+- `text` — human-readable terminal output
+- `json` — stable AnalysisReport/ComparisonReport JSON (for CI and AI agents)
+- `markdown` — Markdown tables
+
+## FHIR versions
+
+R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from fhirVersion field.
+
+## Links
+
+- npm: https://www.npmjs.com/package/fhir-capability-analyzer
+- GitHub: https://github.com/dnlbox/fhir-capability-analyzer
+- Docs: https://dnlbox.github.io/fhir-capability-analyzer/
+- FHIR spec: https://hl7.org/fhir/

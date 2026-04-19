@@ -1,0 +1,64 @@
+{
+  "resourceType": "CapabilityStatement",
+  "id": "ips-server-example",
+  "name": "IPSServerExample",
+  "title": "Example IPS FHIR Server",
+  "status": "active",
+  "kind": "instance",
+  "fhirVersion": "4.0.1",
+  "format": ["json", "xml"],
+  "instantiates": [
+    "http://hl7.org/fhir/uv/ips/CapabilityStatement/ips-server"
+  ],
+  "implementationGuide": [
+    "http://hl7.org/fhir/uv/ips/ImplementationGuide/hl7.fhir.uv.ips"
+  ],
+  "rest": [
+    {
+      "mode": "server",
+      "security": {
+        "cors": true,
+        "service": [
+          {
+            "coding": [{ "code": "SMART-on-FHIR" }]
+          }
+        ]
+      },
+      "resource": [
+        {
+          "type": "Patient",
+          "profile": "http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips",
+          "supportedProfile": [
+            "http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips"
+          ],
+          "interaction": [
+            { "code": "read" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            { "name": "_id", "type": "token" },
+            { "name": "identifier", "type": "token" }
+          ]
+        },
+        {
+          "type": "Composition",
+          "profile": "http://hl7.org/fhir/uv/ips/StructureDefinition/Composition-uv-ips",
+          "interaction": [
+            { "code": "read" },
+            { "code": "search-type" }
+          ],
+          "searchParam": [
+            { "name": "patient", "type": "reference" },
+            { "name": "type", "type": "token" }
+          ]
+        }
+      ],
+      "operation": [
+        {
+          "name": "$summary",
+          "definition": "http://hl7.org/fhir/uv/ips/OperationDefinition/summary"
+        }
+      ]
+    }
+  ]
+}
