@@ -1,6 +1,6 @@
 {
   "name": "fhir-capability-analyzer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI and library for fetching, analyzing, and comparing FHIR server CapabilityStatements",
   "author": "Daniel Veronez",
   "license": "MIT",

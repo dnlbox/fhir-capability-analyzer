@@ -86,4 +86,31 @@ export const PROFILE_REGISTRY: readonly ProfileEntry[] = [
     country: "de",
     standard: "ISiK",
   },
+  // FR Core (Interop'Santé / HL7 France)
+  {
+    urlPattern: "http://hl7.org/fhir/fr/core/",
+    name: "FR Core",
+    country: "fr",
+    standard: "FR Core",
+  },
+  {
+    urlPattern: "https://hl7.fr/ig/fhir/",
+    name: "FR Core",
+    country: "fr",
+    standard: "FR Core",
+  },
+  // NL Nictiz (Netherlands)
+  {
+    urlPattern: "http://nictiz.nl/fhir/",
+    name: "NL Nictiz",
+    country: "nl",
+    standard: "NL Nictiz",
+  },
+  // IHE (Integrating the Healthcare Enterprise)
+  {
+    urlPattern: "https://profiles.ihe.net/",
+    name: "IHE",
+    country: "international",
+    standard: "IHE",
+  },
 ];

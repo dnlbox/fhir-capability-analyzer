@@ -59,6 +59,30 @@ describe("detectProfiles", () => {
     expect(result[0]?.country).toBe("de");
   });
 
+  it("detects FR Core (HL7 France)", () => {
+    const url = "http://hl7.org/fhir/fr/core/StructureDefinition/fr-core-patient";
+    const result = detectProfiles([url]);
+    expect(result).toHaveLength(1);
+    expect(result[0]?.standard).toBe("FR Core");
+    expect(result[0]?.country).toBe("fr");
+  });
+
+  it("detects NL Nictiz", () => {
+    const url = "http://nictiz.nl/fhir/StructureDefinition/nl-core-Patient";
+    const result = detectProfiles([url]);
+    expect(result).toHaveLength(1);
+    expect(result[0]?.standard).toBe("NL Nictiz");
+    expect(result[0]?.country).toBe("nl");
+  });
+
+  it("detects IHE", () => {
+    const url = "https://profiles.ihe.net/ITI/PDQm/StructureDefinition/IHE.PDQm.Patient";
+    const result = detectProfiles([url]);
+    expect(result).toHaveLength(1);
+    expect(result[0]?.standard).toBe("IHE");
+    expect(result[0]?.country).toBe("international");
+  });
+
   it("deduplicates the same URL appearing twice", () => {
     const url = "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient";
     const result = detectProfiles([url, url]);
