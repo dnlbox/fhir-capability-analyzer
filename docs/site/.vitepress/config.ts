@@ -8,6 +8,7 @@ export default defineConfig({
   title: "fhir-capability-analyzer",
   description: DESCRIPTION,
   base: "/fhir-capability-analyzer/",
+  appearance: 'dark',
   sitemap: { hostname: HOSTNAME + "/" },
   head: [
     ["meta", { property: "og:type", content: "website" }],
