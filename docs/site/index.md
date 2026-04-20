@@ -2,6 +2,7 @@
 layout: home
 hero:
   name: fhir-capability-analyzer
+  text: What does this server actually support?
   tagline: Fetch, analyze, and compare FHIR server capabilities. Profile detection. CI-ready.
   actions:
     - theme: brand
@@ -41,3 +42,15 @@ npx fhir-capability-analyzer compare ./baseline.json https://staging.example.com
 ```
 
 Supports FHIR **R4** (4.0.1), **R4B** (4.3.0), and **R5** (5.0.0) — auto-detected from the `fhirVersion` field.
+
+## Part of the FHIR operations toolkit
+
+Three focused CLI tools built for FHIR development workflows. Each does one job well — compose them in shell pipelines, CI steps, or AI agent chains instead of reaching for a single monolithic toolkit.
+
+| Tool | Purpose |
+|------|---------|
+| [fhir-resource-diff](https://dnlbox.github.io/fhir-resource-diff) | Diff, validate, and inspect FHIR resources |
+| **fhir-capability-analyzer** *(this)* | Analyze and compare FHIR server CapabilityStatements |
+| [fhir-test-data](https://dnlbox.github.io/fhir-test-data) | Generate valid FHIR test resources across 14 locales |
+
+The tools are independent — use one, two, or all three in any combination that fits your pipeline.
