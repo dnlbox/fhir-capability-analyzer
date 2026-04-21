@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Corrected AU Core profile detection to use the HL7 Australia canonical prefix `http://hl7.org.au/fhir/core/`
-- Removed the retired `fhir-registry.smarthealthit.org` SMART App Launch prefix from advertised profile detection
+- Clarified that supported profile URL prefixes are FHIR canonical identifiers and may not resolve in a browser
 
 ## [0.1.2] - 2026-04-19
 

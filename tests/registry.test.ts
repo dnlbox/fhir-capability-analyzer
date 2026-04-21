@@ -58,10 +58,11 @@ describe("detectProfiles", () => {
     expect(result[0]?.standard).toBe("SMART App Launch");
   });
 
-  it("does not detect the retired SMART OAuth extension registry host", () => {
+  it("detects the SMART OAuth extension canonical even though it is not browsable", () => {
     const url = "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris";
     const result = detectProfiles([url]);
-    expect(result).toEqual([]);
+    expect(result).toHaveLength(1);
+    expect(result[0]?.standard).toBe("SMART App Launch");
   });
 
   it("detects ISiK (gematik)", () => {

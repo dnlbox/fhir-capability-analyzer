@@ -62,6 +62,12 @@ export const PROFILE_REGISTRY: readonly ProfileEntry[] = [
   },
   // SMART App Launch
   {
+    urlPattern: "http://fhir-registry.smarthealthit.org/",
+    name: "SMART App Launch",
+    country: "international",
+    standard: "SMART App Launch",
+  },
+  {
     urlPattern: "http://hl7.org/fhir/smart-app-launch/",
     name: "SMART App Launch",
     country: "international",
