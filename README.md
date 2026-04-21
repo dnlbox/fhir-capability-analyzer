@@ -181,20 +181,20 @@ const profiles = detectProfiles([
 
 Detects conformance to known international and national FHIR profiles by matching profile URLs declared in `instantiates`, `implementationGuide`, and per-resource `profile`/`supportedProfile` fields.
 
-| Standard         | Country          | URL prefix                                                                         |
-| ---------------- | ---------------- | ---------------------------------------------------------------------------------- |
-| US Core          | 🇺🇸 us            | `http://hl7.org/fhir/us/core/`                                                     |
-| UK Core          | 🇬🇧 uk            | `https://fhir.hl7.org.uk/`, `https://fhir.nhs.uk/`                                 |
-| AU Core          | 🇦🇺 au            | `http://hl7.org/fhir/au/core/`                                                     |
-| AU Base          | 🇦🇺 au            | `http://hl7.org.au/fhir/`                                                          |
-| CA Baseline      | 🇨🇦 ca            | `http://hl7.org/fhir/ca/baseline/`                                                 |
-| IPS              | 🌍 international | `http://hl7.org/fhir/uv/ips/`                                                      |
-| IPA              | 🌍 international | `http://hl7.org/fhir/uv/ipa/`                                                      |
-| SMART App Launch | 🌍 international | `http://fhir-registry.smarthealthit.org/`, `http://hl7.org/fhir/smart-app-launch/` |
-| ISiK             | 🇩🇪 de            | `https://gematik.de/fhir/isik/`, `https://gematik.de/fhir/ISiK/`                   |
-| FR Core          | 🇫🇷 fr            | `http://hl7.org/fhir/fr/core/`, `https://hl7.fr/ig/fhir/`                          |
-| NL Nictiz        | 🇳🇱 nl            | `http://nictiz.nl/fhir/`                                                            |
-| IHE              | 🌍 international | `https://profiles.ihe.net/`                                                         |
+| Standard         | Country          | Canonical URL prefix                                             |
+| ---------------- | ---------------- | ---------------------------------------------------------------- |
+| US Core          | 🇺🇸 us            | `http://hl7.org/fhir/us/core/`                                   |
+| UK Core          | 🇬🇧 uk            | `https://fhir.hl7.org.uk/`, `https://fhir.nhs.uk/`               |
+| AU Core          | 🇦🇺 au            | `http://hl7.org.au/fhir/core/`                                   |
+| AU Base          | 🇦🇺 au            | `http://hl7.org.au/fhir/`                                        |
+| CA Baseline      | 🇨🇦 ca            | `http://hl7.org/fhir/ca/baseline/`                               |
+| IPS              | 🌍 international | `http://hl7.org/fhir/uv/ips/`                                    |
+| IPA              | 🌍 international | `http://hl7.org/fhir/uv/ipa/`                                    |
+| SMART App Launch | 🌍 international | `http://hl7.org/fhir/smart-app-launch/`                          |
+| ISiK             | 🇩🇪 de            | `https://gematik.de/fhir/isik/`, `https://gematik.de/fhir/ISiK/` |
+| FR Core          | 🇫🇷 fr            | `http://hl7.org/fhir/fr/core/`, `https://hl7.fr/ig/fhir/`        |
+| NL Nictiz        | 🇳🇱 nl            | `http://nictiz.nl/fhir/`                                          |
+| IHE              | 🌍 international | `https://profiles.ihe.net/`                                       |
 
 ## Architecture
 
