@@ -28,7 +28,7 @@ export const PROFILE_REGISTRY: readonly ProfileEntry[] = [
   },
   // AU Core / AU Base (HL7 Australia)
   {
-    urlPattern: "http://hl7.org/fhir/au/core/",
+    urlPattern: "http://hl7.org.au/fhir/core/",
     name: "AU Core",
     country: "au",
     standard: "AU Core",
@@ -61,12 +61,6 @@ export const PROFILE_REGISTRY: readonly ProfileEntry[] = [
     standard: "IPA",
   },
   // SMART App Launch
-  {
-    urlPattern: "http://fhir-registry.smarthealthit.org/",
-    name: "SMART App Launch",
-    country: "international",
-    standard: "SMART App Launch",
-  },
   {
     urlPattern: "http://hl7.org/fhir/smart-app-launch/",
     name: "SMART App Launch",

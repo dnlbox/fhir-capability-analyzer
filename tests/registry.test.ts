@@ -29,11 +29,17 @@ describe("detectProfiles", () => {
   });
 
   it("detects AU Core", () => {
-    const url = "http://hl7.org/fhir/au/core/StructureDefinition/au-core-patient";
+    const url = "http://hl7.org.au/fhir/core/StructureDefinition/au-core-patient";
     const result = detectProfiles([url]);
     expect(result).toHaveLength(1);
     expect(result[0]?.standard).toBe("AU Core");
     expect(result[0]?.country).toBe("au");
+  });
+
+  it("does not detect the invalid historical AU Core URL", () => {
+    const url = "http://hl7.org/fhir/au/core/StructureDefinition/au-core-patient";
+    const result = detectProfiles([url]);
+    expect(result).toEqual([]);
   });
 
   it("detects IPS", () => {
@@ -45,10 +51,17 @@ describe("detectProfiles", () => {
   });
 
   it("detects SMART App Launch", () => {
-    const url = "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris";
+    const url =
+      "http://hl7.org/fhir/smart-app-launch/ImplementationGuide/hl7.fhir.uv.smart-app-launch";
     const result = detectProfiles([url]);
     expect(result).toHaveLength(1);
     expect(result[0]?.standard).toBe("SMART App Launch");
+  });
+
+  it("does not detect the retired SMART OAuth extension registry host", () => {
+    const url = "http://fhir-registry.smarthealthit.org/StructureDefinition/oauth-uris";
+    const result = detectProfiles([url]);
+    expect(result).toEqual([]);
   });
 
   it("detects ISiK (gematik)", () => {
