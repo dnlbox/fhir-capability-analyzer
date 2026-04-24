@@ -1,59 +1,139 @@
 # fhir-capability-analyzer
 
-> TypeScript CLI and library for fetching, analyzing, and comparing FHIR server CapabilityStatements.
+> Version 0.1.3. TypeScript CLI and library for fetching, analyzing, and comparing
+> FHIR server CapabilityStatements.
 
 `fhir-capability-analyzer` answers the question: "What does this FHIR server actually support?"
-It fetches the CapabilityStatement from any FHIR server's /metadata endpoint, parses the deeply
-nested JSON into an ergonomic data model, detects conformance to international profiles, generates
-warnings for common configuration issues, and compares two servers' capabilities side by side.
+It fetches the CapabilityStatement from any FHIR server's `/metadata` endpoint, parses the
+deeply nested JSON into a clean data model, detects conformance to international profiles,
+generates warnings for common configuration issues, and can compare two servers side by side.
 
-## Core library (browser-safe)
+The browser-safe TypeScript core works in Node.js, Deno, Cloudflare Workers, and browser bundles.
 
-```typescript
-import { fetchCapabilityStatement, parseFromJson, analyze, compare } from "fhir-capability-analyzer";
-import { detectProfiles } from "fhir-capability-analyzer/registry";
-```
+## When to use this library
 
-Key functions:
-- `fetchCapabilityStatement(url)` — fetch + parse a CapabilityStatement from a FHIR server URL
-- `parseFromJson(raw)` — parse a CapabilityStatement from an already-loaded JSON object
-- `analyze(capability)` — produce an AnalysisReport (summary, profile conformance, warnings)
-- `compare(a, b)` — produce a ComparisonReport (added, removed, changed differences)
-- `detectProfiles(urls)` — detect known profile families from a list of profile URLs
+- You need to understand what resources and interactions a FHIR server supports
+- You want to detect which international profile a server claims to follow
+- You need to compare two servers before a migration or environment promotion
+- You want a CI gate that fails if a server's capabilities change unexpectedly
 
-## CLI
+## Installation
 
 ```bash
-fhir-capability-analyzer analyze <url-or-file> [--format text|json|markdown]
-fhir-capability-analyzer compare <sourceA> <sourceB> [--format text|json|markdown] [--exit-on-diff]
+npm install fhir-capability-analyzer       # library
+npm install -g fhir-capability-analyzer    # global CLI
+```
+
+## Key CLI commands
+
+```bash
+# Analyze a live FHIR server
+fhir-capability-analyzer analyze https://hapi.fhir.org/baseR4
+
+# Analyze a local CapabilityStatement file
+fhir-capability-analyzer analyze ./capability.json
+
+# JSON output (stable schema, for CI and AI agents)
+fhir-capability-analyzer analyze https://hapi.fhir.org/baseR4 --format json
+
+# Markdown output
+fhir-capability-analyzer analyze https://hapi.fhir.org/baseR4 --format markdown
+
+# Compare two servers
+fhir-capability-analyzer compare https://server-a.example.com https://server-b.example.com
+
+# Compare and fail CI if differences found
+fhir-capability-analyzer compare ./baseline.json https://server.example.com --exit-on-diff
+
+# Analyze an OAuth 2.0 protected server (pass a pre-obtained token)
+fhir-capability-analyzer analyze https://secure.example.com --bearer-token "$TOKEN"
+
+# Use environment variable instead of flag (keeps token out of shell history)
+FHIR_TOKEN=eyJ... fhir-capability-analyzer analyze https://secure.example.com
+```
+
+## Exit codes
+
+- `0` — success, no warnings
+- `1` — success, but warnings were found (text and markdown modes only)
+- `2` — fetch or parse error
+
+## TypeScript library API
+
+```typescript
+import {
+  fetchCapabilityStatement,
+  parseFromJson,
+  analyze,
+  compare,
+} from "fhir-capability-analyzer";
+import { detectProfiles } from "fhir-capability-analyzer/registry";
+
+// Fetch from a live server
+const result = await fetchCapabilityStatement("https://hapi.fhir.org/baseR4");
+
+// Fetch from a protected server
+const result = await fetchCapabilityStatement("https://secure.example.com", {
+  headers: { Authorization: `Bearer ${token}` },
+});
+if (!result.success) throw new Error(result.error);
+
+// Analyze
+const report = analyze(result.capability);
+console.log(report.summary.resourceCount);       // number of resources
+console.log(report.conformance.detectedProfiles); // ProfileConformance[]
+console.log(report.warnings);                     // string[]
+
+// Parse from local JSON
+const localResult = parseFromJson(JSON.parse(rawJson));
+
+// Compare two servers
+const diff = compare(capA, capB);
+// diff.added, diff.removed, diff.changed — ComparisonDifference[]
+
+// Profile detection only
+const profiles = detectProfiles([
+  "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+]);
 ```
 
 ## Key types
 
-- `ServerCapability` — ergonomic parsed CapabilityStatement
-- `AnalysisReport` — { server, summary, conformance, warnings }
-- `ComparisonReport` — { added, removed, changed } (ComparisonDifference[])
-- `FetchResult` — discriminated union: { success: true, capability } | { success: false, error }
-- `ProfileConformance` — { url, name, country, standard, version? }
+- `ServerCapability` — clean parsed CapabilityStatement
+- `AnalysisReport` — `{ server, summary, conformance, warnings }`
+- `ComparisonReport` — `{ added, removed, changed }` (ComparisonDifference[])
+- `FetchResult` — discriminated union: `{ success: true, capability }` or `{ success: false, error }`
+- `ProfileConformance` — `{ url, name, country, standard, version? }`
 
 ## Profile detection
 
-Detects: US Core, UK Core, AU Core/Base, CA Baseline, IPS, IPA, SMART App Launch, ISiK (Germany).
-Detection is prefix-based on profile URLs declared in the CapabilityStatement.
+Detects conformance by matching profile URLs declared in the CapabilityStatement against
+known canonical URL prefixes:
 
-## Output formats
+US Core, UK Core, AU Core, AU Base, CA Baseline, IPS, IPA, SMART App Launch, ISiK (Germany),
+FR Core (France), NL Nictiz (Netherlands), IHE (international)
 
-- `text` — human-readable terminal output
-- `json` — stable AnalysisReport/ComparisonReport JSON (for CI and AI agents)
-- `markdown` — Markdown tables
+Detection is prefix-based. The tool does not evaluate resource content against profile rules.
 
-## FHIR versions
+## Supported FHIR versions
 
-R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from fhirVersion field.
+R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from the `fhirVersion` field.
+
+## What this library does NOT do
+
+- Full StructureDefinition / profile conformance validation (use the HL7 FHIR Validator)
+- Profile evaluation beyond URL pattern matching
+- OAuth 2.0 authorization flows (provide a pre-obtained bearer token via `--bearer-token` or `FHIR_TOKEN`)
+- IG package resolution or download
+
+## Companion tools
+
+- [`fhir-resource-diff`](https://www.npmjs.com/package/fhir-resource-diff) — validate and diff individual FHIR JSON resources
+- [`fhir-test-data`](https://www.npmjs.com/package/fhir-test-data) — generate valid FHIR fixtures across 14 locales
 
 ## Links
 
-- npm: https://www.npmjs.com/package/fhir-capability-analyzer
-- GitHub: https://github.com/dnlbox/fhir-capability-analyzer
-- Docs: https://dnlbox.github.io/fhir-capability-analyzer/
-- FHIR spec: https://hl7.org/fhir/
+- [Documentation](https://dnlbox.github.io/fhir-capability-analyzer/)
+- [npm](https://www.npmjs.com/package/fhir-capability-analyzer)
+- [GitHub](https://github.com/dnlbox/fhir-capability-analyzer)
+- [FHIR specification](https://hl7.org/fhir/)

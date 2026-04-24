@@ -1,24 +1,26 @@
 # fhir-capability-analyzer
 
-> A TypeScript CLI and library for fetching, analyzing, and comparing FHIR server CapabilityStatements.
-
 [![CI](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/codeql.yml/badge.svg)](https://github.com/dnlbox/fhir-capability-analyzer/actions/workflows/codeql.yml)
 [![npm](https://img.shields.io/npm/v/fhir-capability-analyzer)](https://www.npmjs.com/package/fhir-capability-analyzer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-CapabilityStatements are the machine-readable metadata every FHIR server exposes at its `/metadata` endpoint — describing every resource, interaction, search parameter, operation, and security mechanism the server supports. These documents are routinely 1,000–3,000 lines of deeply nested JSON.
-
-`fhir-capability-analyzer` answers the question: **"What does this FHIR server actually support?"**
+A TypeScript CLI and library that answers the question: **"What does this FHIR server actually support?"**
 
 - Fetch a CapabilityStatement from any FHIR server URL or local JSON file
-- Parse it into a clean, ergonomic data model
-- Detect conformance to international profiles: US Core, UK Core, AU Core, IPS, IPA, SMART App Launch, ISiK
-- Generate a structured analysis report with warnings for common issues
+- Summarize resources, interactions, operations, and security in a readable format
+- Detect conformance to international profiles: US Core, UK Core, AU Core, IPS, IPA, SMART App Launch, ISiK, and more
+- Generate a structured analysis report with warnings for common configuration issues
 - Compare two servers' capabilities side by side
 - Output as human-readable text, JSON (CI-friendly), or Markdown
 
 The browser-safe core works in Node.js, Deno, Cloudflare Workers, and browser bundles. The CLI wraps the same core with file I/O and exit codes.
+
+## Why this exists
+
+Every FHIR server exposes a CapabilityStatement at `/metadata` describing every resource, interaction, search parameter, and security mechanism it supports. Reading one by hand is painful: a typical document runs 1,000 to 3,000 lines of deeply nested JSON.
+
+`fhir-capability-analyzer` does that reading for you: fetch, parse, summarize, and compare, all from the command line. It also detects which international profiles a server declares support for, which is useful when integrating with servers in different countries or healthcare systems.
 
 ## Quick start
 
@@ -227,21 +229,65 @@ No code under `src/core/`, `src/registry/`, or `src/formatters/` imports Node.js
 ## What this tool does NOT do
 
 - Full StructureDefinition / profile conformance validation — use the [HL7 FHIR Validator](https://confluence.hl7.org/display/FHIR/Using+the+FHIR+Validator)
-- Profile evaluation beyond URL pattern matching
-- Authentication against secured FHIR servers
+- Profile evaluation beyond URL pattern matching (only checks declared URLs, not resource content)
+- OAuth 2.0 authorization flows — you need to obtain a bearer token separately and pass it via `--bearer-token` or `FHIR_TOKEN`
 - IG package resolution or download
-- XML ↔ JSON conversion — use the [`fhir`](https://www.npmjs.com/package/fhir-tool) package
+- XML to JSON conversion — use the [`fhir`](https://www.npmjs.com/package/fhir) package
 
 ## Supported FHIR versions
 
 R4 (4.0.1), R4B (4.3.0), R5 (5.0.0) — auto-detected from the `fhirVersion` field.
 
-## Related tools
+## The FHIR TypeScript ecosystem
 
-| Tool                                                               | Purpose                                                      |
-| ------------------------------------------------------------------ | ------------------------------------------------------------ |
-| [fhir-resource-diff](https://github.com/dnlbox/fhir-resource-diff) | Validate, diff, and compare individual FHIR JSON resources   |
-| [fhir-test-data](https://github.com/dnlbox/fhir-test-data)         | Generate valid FHIR test data with country-aware identifiers |
+`fhir-capability-analyzer` is part of a small family of tools for FHIR developer workflows:
+
+| Tool | Purpose |
+|---|---|
+| [`fhir-resource-diff`](https://github.com/dnlbox/fhir-resource-diff) | Validate, diff, and compare individual FHIR JSON resources |
+| [`fhir-test-data`](https://github.com/dnlbox/fhir-test-data) | Generate valid FHIR test data with country-aware identifiers (14 locales) |
+| `fhir-capability-analyzer` (this package) | Fetch, analyze, and compare FHIR server CapabilityStatements |
+
+**Using them together:**
+
+```bash
+# Check what a server supports before running integration tests
+fhir-capability-analyzer analyze https://your-fhir-server.example.com
+
+# Generate test patients and validate them against the FHIR spec
+fhir-test-data generate patient --locale uk --seed 42 | \
+  fhir-resource-diff validate - --fhir-version R4
+
+# Compare two servers to find differences before a migration
+fhir-capability-analyzer compare https://old-server.example.com https://new-server.example.com \
+  --exit-on-diff
+```
+
+## Development
+
+### Prerequisites
+
+- Node.js >= 20
+- pnpm >= 9
+
+### Setup
+
+```bash
+git clone https://github.com/dnlbox/fhir-capability-analyzer.git
+cd fhir-capability-analyzer
+pnpm install
+```
+
+### Common scripts
+
+| Script | Purpose |
+|--------|---------|
+| `pnpm cli -- analyze <url>` | Run CLI from source |
+| `pnpm test` | Run tests |
+| `pnpm test:watch` | Run tests in watch mode |
+| `pnpm typecheck` | TypeScript type checking |
+| `pnpm lint` | ESLint |
+| `pnpm build` | Production build (tsup) |
 
 ## Roadmap
 

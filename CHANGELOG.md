@@ -7,10 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-04-24
+
 ### Fixed
 
 - Corrected AU Core profile detection to use the HL7 Australia canonical prefix `http://hl7.org.au/fhir/core/`
 - Clarified that supported profile URL prefixes are FHIR canonical identifiers and may not resolve in a browser
+
+### Changed
+
+- README: added "Why this exists" section, Development section, ecosystem table with all three sister tools, and pipeline integration examples; fixed the "What this tool does NOT do" entry for authentication to reflect that bearer tokens are supported but OAuth flows are not
+- `llms.txt`: updated with authentication details, exit codes, cross-references to `fhir-resource-diff` and `fhir-test-data`
 
 ## [0.1.2] - 2026-04-19
 
