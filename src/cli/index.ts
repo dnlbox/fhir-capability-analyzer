@@ -14,7 +14,7 @@ const program = new Command();
 program
   .name("fhir-capability-analyzer")
   .description("Fetch, analyze, and compare FHIR server CapabilityStatements")
-  .version(cliVersion, "-v, --version");
+  .version(cliVersion, "-V, --version", "Print version number");
 
 program
   .command("analyze <source>")
