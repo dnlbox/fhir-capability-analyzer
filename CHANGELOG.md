@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BREAKING**: minimum Node version raised from 20 to 22 (`engines.node >=22.0.0`). Driven by upstream pnpm 11.x dropping Node 20 support (uses `node:sqlite`, available in Node 22.13+ only). `@types/node` bumped to `^24` (LTS line).
 - Upgraded CLI framework `commander` 12→14. No user-facing behaviour change expected; `--help`, `--version`, and subcommand signatures (`analyze <source>`, `compare <sourceA> <sourceB>`) are unchanged. If `--help` output formatting shifts (whitespace), it is upstream cosmetic.
 - **BREAKING**: short version flag changed from `-v` to `-V` for consistency with sibling CLIs (`fhir-resource-diff`, `fhir-test-data`) and the commander default convention. `--version` (long form) is unchanged. Pre-1.0 release; scripts using `-v` should switch to `-V` or `--version`.
 - Dev: bumped typescript 5.9→6 and vitest 2→3 (`@vitest/coverage-v8` 2→3); added `ignoreDeprecations: "6.0"` and `types: ["node"]` to `tsconfig.json` for tsup DTS compatibility. vitest 4 deferred pending vitepress 2 stable (vite 5 → 6 peer constraint). No user-facing behaviour change.
