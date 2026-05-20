@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **BREAKING**: short version flag changed from `-v` to `-V` for consistency with sibling CLIs (`fhir-resource-diff`, `fhir-test-data`) and the commander default convention. `--version` (long form) is unchanged. Pre-1.0 release; scripts using `-v` should switch to `-V` or `--version`.
 - Dev: bumped typescript 5.9→6 and vitest 2→3 (`@vitest/coverage-v8` 2→3); added `ignoreDeprecations: "6.0"` and `types: ["node"]` to `tsconfig.json` for tsup DTS compatibility. vitest 4 deferred pending vitepress 2 stable (vite 5 → 6 peer constraint). No user-facing behaviour change.
 - Dev: bumped eslint to 10; removed unused zod dependency. No user-facing behaviour change.
 
