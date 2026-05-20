@@ -1,4 +1,9 @@
-# Profile detection
+---
+title: Profile Detection
+description: How fhir-capability-analyzer detects international FHIR profile conformance.
+sidebar:
+  order: 4
+---
 
 `fhir-capability-analyzer` detects conformance to known international and national FHIR profiles
 by matching profile URLs declared in the CapabilityStatement.

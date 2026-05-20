@@ -1,4 +1,9 @@
-# Exit codes
+---
+title: Exit Codes
+description: CLI exit codes returned by fhir-capability-analyzer commands.
+sidebar:
+  order: 4
+---
 
 ## analyze
 
