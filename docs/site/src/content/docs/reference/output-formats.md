@@ -1,4 +1,9 @@
-# Output formats
+---
+title: Output Formats
+description: The text, json, and markdown output formats supported by fhir-capability-analyzer.
+sidebar:
+  order: 3
+---
 
 All commands support three output formats via `--format`.
 

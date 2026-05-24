@@ -1,4 +1,7 @@
-# Ecosystem
+---
+title: Ecosystem
+description: How fhir-capability-analyzer fits into the fhir-toolkit suite of tools.
+---
 
 `fhir-capability-analyzer` is one of three complementary FHIR developer tools built to cover
 the most common pain points in FHIR integration work.

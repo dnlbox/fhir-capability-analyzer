@@ -1,4 +1,9 @@
-# Analyze a server
+---
+title: Analyze a Server
+description: Fetch a FHIR server's CapabilityStatement and get a structured analysis report.
+sidebar:
+  order: 2
+---
 
 The `analyze` command fetches a CapabilityStatement and produces a structured report.
 
