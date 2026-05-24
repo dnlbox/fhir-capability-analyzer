@@ -1,4 +1,9 @@
-# CLI reference
+---
+title: CLI Reference
+description: All commands and options for the fhir-capability-analyzer CLI.
+sidebar:
+  order: 1
+---
 
 ## Global options
 
