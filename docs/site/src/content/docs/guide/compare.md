@@ -1,4 +1,9 @@
-# Compare two servers
+---
+title: Compare Two Servers
+description: Compare two FHIR server CapabilityStatements and get a structured diff report.
+sidebar:
+  order: 3
+---
 
 The `compare` command fetches two CapabilityStatements and produces a diff report.
 

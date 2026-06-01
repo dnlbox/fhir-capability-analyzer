@@ -1,4 +1,9 @@
-# Getting started
+---
+title: Getting Started
+description: Install and run fhir-capability-analyzer in under a minute.
+sidebar:
+  order: 1
+---
 
 ## Requirements
 

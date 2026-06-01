@@ -1,4 +1,9 @@
-# Library API
+---
+title: Library API
+description: TypeScript API for using fhir-capability-analyzer programmatically in Node or Browser.
+sidebar:
+  order: 2
+---
 
 ## Installation
 

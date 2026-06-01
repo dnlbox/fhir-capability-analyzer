@@ -1,4 +1,9 @@
-# CI/CD integration
+---
+title: CI/CD Integration
+description: Patterns for using fhir-capability-analyzer in CI pipelines and GitHub Actions.
+sidebar:
+  order: 5
+---
 
 ## Capability regression check
 
