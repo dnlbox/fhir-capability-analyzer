@@ -1,5 +1,6 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import fs from "node:fs/promises";
 
 const HOSTNAME = "https://dnlbox.github.io/fhir-capability-analyzer";
 const DESCRIPTION =
@@ -124,5 +125,20 @@ export default defineConfig({
         themes: ["dark-plus", "github-light"],
       },
     }),
+    {
+      name: "copy-sitemap",
+      hooks: {
+        "astro:build:done": async ({ dir }) => {
+          try {
+            await fs.copyFile(
+              new URL("sitemap-index.xml", dir),
+              new URL("sitemap.xml", dir)
+            );
+          } catch (err) {
+            console.error("Failed to copy sitemap-index.xml to sitemap.xml:", err);
+          }
+        },
+      },
+    },
   ],
 });
