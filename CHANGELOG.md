@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Docs: added `docs/site/public/llms.txt` so the published documentation site exposes the same AI-readable project summary as the repository root.
+
+### Changed
+
+- Dev: upgraded `commander` 14→15. No CLI signature change expected; existing `analyze <source>`, `compare <sourceA> <sourceB>`, `--help`, and `--version` behavior remains intended to be compatible.
+- Docs: aligned README prerequisites with the current Node 22 and pnpm 11 requirements.
+- Docs: copies the generated Starlight `sitemap-index.xml` to `sitemap.xml` during docs builds for better crawler compatibility.
+- Docs: updated root `llms.txt` to report version 0.2.0.
+
 ## [0.2.0] - 2026-06-01
 
 ### Changed
