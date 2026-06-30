@@ -36,12 +36,25 @@ yarn-error.log*
 pnpm-debug.log*
 .claude/
 
+# AI tooling
+.agents/
+skills-lock.json
+BUILD_STATE.md
+ROADMAP.md
+
 # Internal maintainer notes (not published)
 AGENTS.md
 CLAUDE.md
+docs/AGENTS.md
 docs/PROJECT.md
 docs/specs/
 docs/research/
+src/core/AGENTS.md
+src/registry/AGENTS.md
+src/formatters/AGENTS.md
+src/cli/AGENTS.md
+tests/AGENTS.md
+examples/AGENTS.md
 
 # Local archive (historical specs, research)
 .archive/
